@@ -1,4 +1,5 @@
 import { Roboto } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react" // import statement already present in the file
 
 import "./globals.css";
 
@@ -20,7 +21,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={roboto.className}>{children}</body>
+      <body className={roboto.className}>
+        <Analytics/>
+        {children}
+      </body>
     </html>
   );
 }
