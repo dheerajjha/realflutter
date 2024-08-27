@@ -1,5 +1,6 @@
 import { Roboto } from "next/font/google";
-import { Analytics } from "@vercel/analytics/react" // import statement already present in the file
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import "./globals.css";
 
@@ -22,7 +23,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <Analytics/>
+        <Analytics />
+        <SpeedInsights />
         {children}
       </body>
     </html>
