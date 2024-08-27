@@ -27,8 +27,8 @@ const packagesSchema = {
       type: "string",
     }),
     defineField({
-      name: "sortDescription",
-      title: "Sort Description",
+      name: "shortDescription",
+      title: "Short Description",
       type: "string",
     }),
     defineField({
