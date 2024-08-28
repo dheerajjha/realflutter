@@ -1,0 +1,56 @@
+[
+  {
+    "title": "image_picker",
+    "likes": "6141",
+    "points": "140",
+    "popularity": "100",
+    "description": "Flutter plugin for selecting images from the Android and iOS image library, and taking new pictures with the camera.",
+    "hashtags": [
+      "camera",
+      "image-picker",
+      "files",
+      "file-selection"
+    ],
+    "last_update": "Jan 4, 2024",
+    "last_version": "1.0.6",
+    "publisher": "flutter.dev",
+    "dart_3_compatible": true,
+    "sdk_data": [
+      "Flutter"
+    ],
+    "platform_data": [
+      "Android",
+      "iOS",
+      "Linux",
+      "macOS",
+      "web",
+      "Windows"
+    ]
+  },
+  {
+    "title": "http",
+    "likes": "5832",
+    "points": "130",
+    "popularity": "98",
+    "description": "A composable, multi-platform async HTTP client for Dart.",
+    "hashtags": [
+      "http",
+      "networking",
+      "api"
+    ],
+    "last_update": "Feb 15, 2024",
+    "last_version": "1.1.0",
+    "publisher": "dart.dev",
+    "dart_3_compatible": true,
+    "sdk_data": [
+      "Dart",
+      "Flutter"
+    ],
+    "platform_data": [
+      "Android",
+      "iOS",
+      "Linux",
+      "macOS"
+    ]
+  }
+]
