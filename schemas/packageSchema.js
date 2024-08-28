@@ -56,8 +56,8 @@ const packagesSchema = {
       ],
       options: {
         list: [
-          { title: "iOS", value: "ios" },
           { title: "Android", value: "android" },
+          { title: "iOS", value: "ios" },
           { title: "Web", value: "web" },
           { title: "Windows", value: "windows" },
           { title: "Linux", value: "linux" },
