@@ -33,7 +33,7 @@ const checkBoxItem = [
     id: 3,
     name: "MacOS",
     slug: "macos",
-    icon: "/apple.png",
+    icon: "/macos.png",
   },
   {
     id: 4,
@@ -113,17 +113,19 @@ const CategoryPage = () => {
 
       if (search) {
         filteredData = filteredData.filter((item) =>
-          item.name.toLowerCase().includes(search.toLowerCase())
+          item?.name?.toLowerCase().includes(search.toLowerCase()),
         );
       }
 
       if (selected.length > 0) {
         filteredData = filteredData.filter((pack) => {
-          const platforms =
-            pack.platforms?.map((platform) => platform.name?.toLowerCase()) ||
-            [];
+          const platforms = Array.isArray(pack?.platforms)
+            ? pack.platforms
+                .filter((platform) => typeof platform === "string")
+                .map((platform) => platform.toLowerCase())
+            : [];
           return selected.every((item) =>
-            platforms.includes(item.value.toLowerCase())
+            platforms.includes(item?.value?.toLowerCase()),
           );
         });
       }
@@ -132,29 +134,31 @@ const CategoryPage = () => {
     } else {
       setPackages([]);
     }
-  }, [search, selected]);
+  }, [search, selected, data]);
+
+  console.log("selected", packages);
 
   if (loading) return <Loader />;
 
   return (
     <div className="">
-      <section className="w-full bg-[#122030] flex items-center justify-center px-3 md:px-8 py-8 lg:py-8 relative overflow-hidden">
-        <div className="max-w-4xl w-full relative  z-10">
-          <form action="" className="w-full relative">
+      <section className="relative flex w-full items-center justify-center overflow-hidden bg-[#122030] px-3 py-8 md:px-8 lg:py-8">
+        <div className="relative z-10 w-full max-w-4xl">
+          <form action="" className="relative w-full">
             <input
               type="text"
-              className="p-[12px] rounded-full text-[#ffffff66] w-full pl-12 text-[16px] bg-[#1A2B3A] border-none focus:outline-none bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)]"
+              className="w-full rounded-full border-none bg-[#1A2B3A] bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)] p-[12px] pl-12 text-[16px] text-[#ffffff66] focus:outline-none"
               placeholder="Search packages here "
               onChange={(e) => setSearch(e.target.value)}
               value={search}
             />
             <Search
-              className="absolute top-1/2 left-3 transform -translate-y-1/2 text-muted-foreground"
+              className="absolute left-3 top-1/2 -translate-y-1/2 transform text-muted-foreground"
               size={18}
             />
             <Button
               variant="gradient"
-              className="absolute top-1/2 right-1 transform -translate-y-1/2 px-8"
+              className="absolute right-1 top-1/2 -translate-y-1/2 transform px-8"
               type="submit"
             >
               Search
@@ -166,30 +170,30 @@ const CategoryPage = () => {
           alt="leaf"
           width={160}
           height={160}
-          className="absolute hidden lg:flex -top-[54%] left-[8%] transform rotate-90 z-0"
+          className="absolute -top-[54%] left-[8%] z-0 hidden rotate-90 transform lg:flex"
         />
         <Image
           src="/assets/leaf.png"
           alt="leaf"
           width={160}
           height={160}
-          className="absolute hidden lg:flex -bottom-[54%] right-[8%] z-0"
+          className="absolute -bottom-[54%] right-[8%] z-0 hidden lg:flex"
         />
       </section>
-      <div className="w-full mx-auto py-3 shadow-[0px_4px_4px_rgba(0,0,0,0.1)] z-30">
-        <div className="w-full max-w-6xl mx-auto px-3 md:px-5 lg:px-0">
+      <div className="z-30 mx-auto w-full py-3 shadow-[0px_4px_4px_rgba(0,0,0,0.1)]">
+        <div className="mx-auto w-full max-w-6xl px-3 md:px-5 lg:px-0">
           <BreadCrumbs breadCrumbs={breadCrumbs} />
         </div>
       </div>
-      <div className="w-full mx-auto py-3 bg-[#ECF4FB] shadow-[0_-2px_2px_rgba(0,0,0,0.1)]">
+      <div className="mx-auto w-full bg-[#ECF4FB] py-3 shadow-[0_-2px_2px_rgba(0,0,0,0.1)]">
         {/* Name of the package */}
-        <div className="max-w-6xl w-full mx-auto px-3 lg:px-0">
-          <div className="py-3 md:py-5 lg:p-0 w-full">
+        <div className="mx-auto w-full max-w-6xl px-3 lg:px-0">
+          <div className="w-full py-3 md:py-5 lg:p-0">
             <GradientText
               text={`All ${data?.name} Packages`}
-              className="text-[25px] lg:text-[32px] font-medium text-center"
+              className="text-center text-[25px] font-medium lg:text-[32px]"
             />
-            <p className="text-heading font-medium text-sm lg:text-[16px]">
+            <p className="text-sm font-medium text-heading lg:text-[16px]">
               Find all the <GradientText text="top packages" /> to kickstart
               your Flutter app with {data?.name}.
             </p>
@@ -197,10 +201,10 @@ const CategoryPage = () => {
         </div>
 
         {/* Showcase of the packages */}
-        <div className="w-full max-w-6xl mx-auto mt-3 md:mt-7 lg:mt-10 flex flex-col lg:flex-row items-start gap-10 px-3 md:px-5 lg:px-0">
+        <div className="mx-auto mt-3 flex w-full max-w-6xl flex-col items-start gap-10 px-3 md:mt-7 md:px-5 lg:mt-10 lg:flex-row lg:px-0">
           <div className="w-full lg:flex-[1_1_25%]">
             <Button
-              className="items-center gap-2 hidden lg:flex"
+              className="hidden items-center gap-2 lg:flex"
               variant="gradient"
             >
               <Filter size={18} />
@@ -230,7 +234,7 @@ const CategoryPage = () => {
                     />
                     {item.name}
                     <Image
-                      src={`/assets${item.icon}`}
+                      src={`/assets/platform${item.icon}`}
                       alt={item.name}
                       width={24}
                       height={24}
@@ -240,27 +244,37 @@ const CategoryPage = () => {
               </ul>
             </div>
           </div>
-          <div className="w-full lg:flex-[1_1_75%] pb-10">
+          <div className="w-full pb-10 lg:flex-[1_1_75%]">
             <div className="space-y-0 md:space-y-5">
-              <div className=" items-center gap-5 h-14 hidden lg:flex">
+              <div className="hidden h-14 items-center gap-5 lg:flex">
                 <p className="whitespace-nowrap">{packages.length} Results</p>
-                <div className="flex items-center flex-wrap gap-3">
+                <div className="flex flex-wrap items-center gap-3">
                   {selected.length > 0 &&
                     selected.map((item) => (
                       <div
-                        className="flex items-center gap-3 border-heading border rounded-full w-fit py-2 px-2 text-heading"
+                        className="flex w-fit items-center gap-3 rounded-full border border-heading px-2 py-2 text-heading"
                         key={item.label}
                       >
                         <span>{item.label}</span> |{" "}
                         <X
                           size={18}
-                          className=" cursor-pointer"
+                          className="cursor-pointer"
                           onClick={() =>
                             handleCheckChange(false, item.label, item.value)
                           }
                         />
                       </div>
                     ))}
+                  {selected.length > 0 && (
+                    <div className="flex w-fit items-center gap-3 rounded-full border border-heading px-2 py-2 text-heading">
+                      <span>Clear All</span> |{" "}
+                      <X
+                        size={18}
+                        className="cursor-pointer"
+                        onClick={() => setSelected([])}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="space-y-5">

@@ -59,7 +59,7 @@ const FilterSider = ({
                   />
                   {item.name}
                   <Image
-                    src={`/assets${item.icon}`}
+                    src={`/assets/platform${item.icon}`}
                     alt={item.name}
                     width={24}
                     height={24}

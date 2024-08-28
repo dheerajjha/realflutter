@@ -25,6 +25,13 @@ async function createPackage(packageData) {
       },
       author: packageData.publisher,
       shortDescription: packageData.description,
+      subCategories: [
+        {
+          _key: "b67722e94ec1",
+          _ref: "7a9c3d73-c421-49a9-9b16-2f3b4a96416c",
+          _type: "reference"
+        }
+      ],
       platforms: packageData.platform_data.map(platform => platform.toLowerCase()),
       lastUpdate: new Date(packageData.last_update).toISOString(),
       likesCount: parseInt(packageData.likes),

@@ -1,12 +1,12 @@
-import apple from "./plateform/apple.png";
-import android from "./plateform/android.png";
-import web from "./plateform/web.png";
-import windows from "./plateform/windows.png";
-import linux from "./plateform/linux.png";
-import ios from "./plateform/ios.png";
+import macos from "./platform/macos.png";
+import android from "./platform/android.png";
+import web from "./platform/web.png";
+import windows from "./platform/windows.png";
+import linux from "./platform/linux.png";
+import ios from "./platform/ios.png";
 
 export const platformImages = {
-  apple,
+  macos,
   android,
   web,
   windows,

@@ -33,7 +33,7 @@ const PackegeCard = ({
           <h3 className="text-heading text-[16px] font-medium">{title}</h3>
           <p className="text-subheading text-sm">{description}</p>
         </div>
-        <div className="px-3 py-1 bg-[#62A5DA] rounded-full text-[16px] font-medium text-white mt-3">
+        <div className="px-3 py-1 bg-[#62A5DA] rounded-full text-[16px] font-medium text-white mt-3 w-fit">
           {packagesCount} packages
         </div>
       </Link>

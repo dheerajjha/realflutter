@@ -70,22 +70,20 @@ const page = async ({ params }) => {
         <div className="max-w-6xl w-full relative z-10">
           <h2 className="text-white text-lg font-semibold">{data?.name}</h2>
           <div className="flex items-center flex-wrap gap-5 mt-5">
-            <div
-              className="px-6 py-2 bg-[#3A6285] text-white rounded-full"
-              target="_blank"
-            >
-              {data?.author}
+            <div className="px-6 py-2 bg-[#3A6285] text-white rounded-full flex items-center gap-2">
+              <span>✍️</span> {data?.author}
             </div>
-            <span className="px-6 py-2 bg-[#3A6285] text-white rounded-full">
-              ❤️{" "}
+            <span className="px-6 py-2 bg-[#3A6285] text-white rounded-full flex items-center gap-2">
+              <span>❤️</span>
               {data?.likesCount > 1000
                 ? `${(data?.likesCount / 1000).toFixed(1)}k`
-                : data?.likesCount}
+                : data?.likesCount}{" "}
+              likes
             </span>
             {data?.tutorialIncluded && (
-              <span className="px-6 py-2 bg-[#3A6285] text-white rounded-full">
-                🎓 Tutorial Included
-              </span>
+              <div className="px-6 py-2 bg-[#3A6285] text-white rounded-full flex items-center gap-2">
+                <span>🎓</span> Tutorial Included
+              </div>
             )}
           </div>
 
