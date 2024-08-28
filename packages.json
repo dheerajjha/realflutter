@@ -1,8 +1,8 @@
 [
   {
     "title": "image_picker",
-    "likes": "6141",
-    "points": "140",
+    "likes": "6913",
+    "points": "160",
     "popularity": "100",
     "description": "Flutter plugin for selecting images from the Android and iOS image library, and taking new pictures with the camera.",
     "hashtags": [
@@ -11,8 +11,8 @@
       "files",
       "file-selection"
     ],
-    "last_update": "Jan 4, 2024",
-    "last_version": "1.0.6",
+    "last_update": "May 31, 2024",
+    "last_version": "1.1.2",
     "publisher": "flutter.dev",
     "dart_3_compatible": true,
     "sdk_data": [
@@ -28,29 +28,52 @@
     ]
   },
   {
-    "title": "http",
-    "likes": "5832",
-    "points": "130",
-    "popularity": "98",
-    "description": "A composable, multi-platform async HTTP client for Dart.",
+    "title": "chopper",
+    "likes": "803",
+    "points": "160",
+    "popularity": "97",
+    "description": "Chopper is an http client generator using source_gen, inspired by Retrofit",
     "hashtags": [
+      "api",
+      "client",
       "http",
-      "networking",
-      "api"
+      "rest"
     ],
-    "last_update": "Feb 15, 2024",
-    "last_version": "1.1.0",
-    "publisher": "dart.dev",
+    "last_update": "Jun 30, 2024",
+    "last_version": "8.0.1",
+    "publisher": "hadrienlejard.io",
     "dart_3_compatible": true,
     "sdk_data": [
-      "Dart",
-      "Flutter"
+      "Dart"
     ],
     "platform_data": [
       "Android",
       "iOS",
       "Linux",
-      "macOS"
+      "macOS",
+      "web",
+      "Windows"
+    ]
+  },
+  {
+    "title": "permission_handler",
+    "likes": "5226",
+    "points": "160",
+    "popularity": "100",
+    "description": "Permission plugin for Flutter. This plugin provides a cross-platform (iOS, Android) API to request and check permissions.",
+    "hashtags": [],
+    "last_update": "Mar 27, 2024",
+    "last_version": "11.3.1",
+    "publisher": "baseflow.com",
+    "dart_3_compatible": true,
+    "sdk_data": [
+      "Flutter"
+    ],
+    "platform_data": [
+      "Android",
+      "iOS",
+      "web",
+      "Windows"
     ]
   }
 ]

@@ -1,5 +1,8 @@
 const { createClient } = require('@sanity/client');
+const { deletePackage, deleteAllPackages } = require('./deletionFunctions');
 const fs = require('fs');
+const axios = require('axios');
+const cheerio = require('cheerio');
 
 // Initialize the Sanity client
 const client = createClient({
@@ -9,9 +12,6 @@ const client = createClient({
   useCdn: false,
   apiVersion: '2024-08-28', // Use today's date
 });
-
-// Read the JSON file
-const packagesData = JSON.parse(fs.readFileSync('packages.json', 'utf8'));
 
 // Function to create a single package
 async function createPackage(packageData) {
@@ -25,17 +25,13 @@ async function createPackage(packageData) {
       },
       author: packageData.publisher,
       shortDescription: packageData.description,
-      // Note: packageImage and gallery are not provided in the given JSON format
       platforms: packageData.platform_data.map(platform => platform.toLowerCase()),
       lastUpdate: new Date(packageData.last_update).toISOString(),
       likesCount: parseInt(packageData.likes),
       pubPoint: parseInt(packageData.points),
-      tutorialIncluded: true, // Assuming tutorial is included by default
+      tutorialIncluded: true,
       tags: packageData.hashtags,
-      // Note: subCategories are not provided in the given JSON format
-      description: packageData.description,
-      // Note: tutorial and example are not provided in the given JSON format
-      // Note: similarPackages and dependentPackages are not provided in the given JSON format
+      description: packageData.description
     });
     console.log(`Created package with ID: ${result._id}`);
   } catch (error) {
@@ -48,6 +44,8 @@ async function createPackage(packageData) {
 
 // Create all packages
 async function createAllPackages() {
+    await deleteAllPackages();
+const packagesData = JSON.parse(fs.readFileSync('packages.json', 'utf8'));
   for (const packageData of packagesData) {
     try {
       await createPackage(packageData);
@@ -60,13 +58,78 @@ async function createAllPackages() {
   console.log('All packages created successfully');
 }
 
-// Export the createPackage function
+// Function to scrape package data from pub.dev
+async function scrapePackageData(packageName) {
+  const url = `https://pub.dev/packages/${packageName}`;
+  const response = await axios.get(url);
+  const $ = cheerio.load(response.data);
+
+  // Helper function to parse numbers, removing any non-digit characters
+  const parseNumber = (str) => {
+    const digitsOnly = str.replace(/\D/g, '');
+    const halfLength = Math.floor(digitsOnly.length / 2);
+    // return parseInt(digitsOnly.slice(0, halfLength)) || 0;
+    return digitsOnly.slice(0, halfLength);
+  };
+
+
+  return {
+    title: packageName,
+    likes: parseNumber($('.packages-score-like .packages-score-value-number').text().trim()),
+    points: parseNumber($('.packages-score-health .packages-score-value-number').text().trim()),
+    popularity: parseNumber($('.packages-score-popularity .packages-score-value-number').text().trim()),
+    description: $('.detail-lead-text').text().trim(),
+    hashtags: [...new Set($('.title:contains("Topics")').next('p').find('a').map((_, el) => $(el).text().trim().replace('#', '')).get())],
+    last_update: $('.-x-ago').attr('title') || 'Unknown',
+    last_version: $('h1.title').text().match(/(\d+\.\d+\.\d+)/)[1],
+    publisher: $('.-pub-publisher').text().trim(),
+    dart_3_compatible: $('.package-badge').text().includes('Dart 3 compatible'),
+    sdk_data: $('.tag-badge-sub')
+      .filter((_, el) => $(el).prev().text().trim() === 'SDK')
+      .map((_, el) => $(el).text().trim())
+      .get(),
+    platform_data: $('.tag-badge-sub')
+      .filter((_, el) => $(el).parent().find('.tag-badge-main').text().trim() === 'Platform')
+      .map((_, el) => $(el).text().trim())
+      .get(),
+  };
+}
+
+// Function to fetch and append packages to packages.json
+async function fetchAndAppendPackages(packageNames) {
+  let packagesData = [];
+  if (fs.existsSync('packages.json')) {
+    packagesData = JSON.parse(fs.readFileSync('packages.json', 'utf8'));
+  }
+
+  for (const packageName of packageNames) {
+    console.log(`Fetching data for ${packageName}...`);
+    const packageData = await scrapePackageData(packageName);
+    packagesData.push(packageData);
+  }
+
+  fs.writeFileSync('packages.json', JSON.stringify(packagesData, null, 2));
+  console.log('packages.json updated successfully');
+}
+
+// Export the functions
 module.exports = {
   createPackage,
-  createAllPackages
+  createAllPackages,
+  fetchAndAppendPackages
 };
 
 // Only run createAllPackages if this file is being run directly
 if (require.main === module) {
-  createAllPackages();
+  const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+
+  readline.question('Enter package names separated by commas: ', async (input) => {
+    const packageNames = input.split(',').map(name => name.trim());
+    await fetchAndAppendPackages(packageNames);
+    readline.close();
+    await createAllPackages();
+  });
 }

@@ -1,14 +1,18 @@
 require('dotenv').config(); // Load environment variables from .env file
-const { createAllPackages } = require('./createPackages');
+const { fetchAndAppendPackages, createAllPackages } = require('./createPackages');
 
-async function testAllPackagesCreation() {
-  console.log('Starting creation of all packages...');
+async function testPackageCreationWithFetch() {
+  console.log('Starting package data fetch and creation...');
+  
+  const packageNames = ['image_picker', 'chopper', 'permission_handler']; // You can modify this list
+  
   try {
+    await fetchAndAppendPackages(packageNames);
     await createAllPackages();
-    console.log('All packages created successfully.');
+    console.log('All packages fetched, appended, and created successfully.');
   } catch (error) {
     console.error('Error in test:', error);
   }
 }
 
-testAllPackagesCreation();
+testPackageCreationWithFetch();
