@@ -61,7 +61,7 @@ const packagesSchema = {
           { title: "Web", value: "web" },
           { title: "Windows", value: "windows" },
           { title: "Linux", value: "linux" },
-          { title: "iOS", value: "ios" },
+          { title: "macOS", value: "macos" },
         ],
         layout: "grid",
       },
