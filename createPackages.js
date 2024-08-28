@@ -91,7 +91,7 @@ async function scrapePackageData(packageName) {
     popularity: parseNumber($('.packages-score-popularity .packages-score-value-number').text().trim()),
     description: $('.detail-lead-text').text().trim(),
     thumbnail: 'https://pub.dev/' + ($('.thumbnail-container').data('thumbnail')?.split(',')[0] || $('.detail-image img').attr('src')),
-    hashtags: [...new Set($('.title:contains("Topics")').next('p').find('a').map((_, el) => $(el).text().trim().replace('#', '')).get())],
+    hashtags: [...new Set($('.title:contains("Topics")').next('p').find('a').map((_, el) => $(el).text().trim()).get())],
     last_update: $('.-x-ago').attr('title') || 'Unknown',
     last_version: $('h1.title').text().match(/(\d+\.\d+\.\d+)/)[1],
     publisher: $('.-pub-publisher').text().trim(),
