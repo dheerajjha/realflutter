@@ -83,7 +83,7 @@ const DetailPackageCard = ({ data, categorySlug }) => {
               {data?.author}
             </Link>
             <TruncatedText
-              text={data?.sortDescription}
+              text={data?.shortDescription}
               isExpanded={isExpanded}
               setIsExpanded={setIsExpanded}
             />

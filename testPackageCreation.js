@@ -5,11 +5,11 @@ const { deleteAllPackages } = require('./deletionFunctions');
 async function testPackageCreationWithFetch() {
   console.log('Starting package data fetch and creation...');
   
-  const packageNames = ['image_picker', 'chopper', 'permission_handler']; // You can modify this list
+  const packageNames = ['in_app_purchase', 'image_picker', 'chopper', 'permission_handler']; // You can modify this list
   
   try {
-    await fetchAndAppendPackages(packageNames);
     // await deleteAllPackages();
+    await fetchAndAppendPackages(packageNames);
     await createAllPackages();
     console.log('All packages fetched, appended, and created successfully.');
   } catch (error) {

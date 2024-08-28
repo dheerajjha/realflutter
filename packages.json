@@ -1,10 +1,35 @@
 [
   {
+    "title": "in_app_purchase",
+    "likes": "2069",
+    "points": "160",
+    "popularity": "99",
+    "description": "A Flutter plugin for in-app purchases. Exposes APIs for making in-app purchases through the App Store and Google Play.",
+    "thumbnail": "https://pub.dev//packages/in_app_purchase/versions/3.2.0/gen-res/gen/iap_ios.webp",
+    "hashtags": [
+      "in-app-purchase",
+      "payment"
+    ],
+    "last_update": "Apr 17, 2024",
+    "last_version": "3.2.0",
+    "publisher": "flutter.dev",
+    "dart_3_compatible": true,
+    "sdk_data": [
+      "Flutter"
+    ],
+    "platform_data": [
+      "Android",
+      "iOS",
+      "macOS"
+    ]
+  },
+  {
     "title": "image_picker",
     "likes": "6913",
     "points": "160",
     "popularity": "100",
     "description": "Flutter plugin for selecting images from the Android and iOS image library, and taking new pictures with the camera.",
+    "thumbnail": "https://pub.dev/undefined",
     "hashtags": [
       "camera",
       "image-picker",
@@ -33,6 +58,7 @@
     "points": "160",
     "popularity": "97",
     "description": "Chopper is an http client generator using source_gen, inspired by Retrofit",
+    "thumbnail": "https://pub.dev/undefined",
     "hashtags": [
       "api",
       "client",
@@ -61,6 +87,7 @@
     "points": "160",
     "popularity": "100",
     "description": "Permission plugin for Flutter. This plugin provides a cross-platform (iOS, Android) API to request and check permissions.",
+    "thumbnail": "https://pub.dev/undefined",
     "hashtags": [],
     "last_update": "Mar 27, 2024",
     "last_version": "11.3.1",

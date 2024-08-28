@@ -1,5 +1,4 @@
 const { createClient } = require('@sanity/client');
-const { deletePackage, deleteAllPackages } = require('./deletionFunctions');
 const fs = require('fs');
 const axios = require('axios');
 const cheerio = require('cheerio');
@@ -16,6 +15,11 @@ const client = createClient({
 // Function to create a single package
 async function createPackage(packageData) {
   try {
+    let packageImage = null;
+    if (packageData.thumbnail) {
+      packageImage = await uploadImageToSanity(packageData.thumbnail);
+    }
+
     const result = await client.create({
       _type: 'package',
       name: packageData.title,
@@ -25,6 +29,7 @@ async function createPackage(packageData) {
       },
       author: packageData.publisher,
       shortDescription: packageData.description,
+      packageImage: packageImage,
       subCategories: [
         {
           _key: "b67722e94ec1",
@@ -51,7 +56,6 @@ async function createPackage(packageData) {
 
 // Create all packages
 async function createAllPackages() {
-    await deleteAllPackages();
 const packagesData = JSON.parse(fs.readFileSync('packages.json', 'utf8'));
   for (const packageData of packagesData) {
     try {
@@ -86,6 +90,7 @@ async function scrapePackageData(packageName) {
     points: parseNumber($('.packages-score-health .packages-score-value-number').text().trim()),
     popularity: parseNumber($('.packages-score-popularity .packages-score-value-number').text().trim()),
     description: $('.detail-lead-text').text().trim(),
+    thumbnail: 'https://pub.dev/' + ($('.thumbnail-container').data('thumbnail')?.split(',')[0] || $('.detail-image img').attr('src')),
     hashtags: [...new Set($('.title:contains("Topics")').next('p').find('a').map((_, el) => $(el).text().trim().replace('#', '')).get())],
     last_update: $('.-x-ago').attr('title') || 'Unknown',
     last_version: $('h1.title').text().match(/(\d+\.\d+\.\d+)/)[1],
@@ -139,4 +144,19 @@ if (require.main === module) {
     readline.close();
     await createAllPackages();
   });
+}
+
+async function uploadImageToSanity(imageUrl) {
+  try {
+    const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+    const buffer = Buffer.from(response.data, 'binary');
+    const asset = await client.assets.upload('image', buffer);
+    return {
+      _type: 'image',
+      asset: { _type: 'reference', _ref: asset._id }
+    };
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    return null;
+  }
 }

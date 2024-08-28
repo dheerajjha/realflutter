@@ -14,7 +14,7 @@ export async function generateMetadata({ params }) {
   const data = await fetchPackage(params.slug);
   return {
     title: `${data?.name}`,
-    description: `${data?.sortDescription}`,
+    description: `${data?.shortDescription}`,
     image: data?.packageImage && urlFor(data?.packageImage).url(),
     openGraph: {
       images: [
@@ -89,7 +89,7 @@ const page = async ({ params }) => {
 
           <div className="my-4">
             <p className="text-white text-lg font-medium">
-              {data?.sortDescription}
+              {data?.shortDescription}
             </p>
           </div>
           <div className="my-3 lg:hidden">
