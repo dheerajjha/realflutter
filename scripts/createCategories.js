@@ -1,4 +1,3 @@
-require('dotenv').config(); // Load environment variables from .env file
 const { createClient } = require('@sanity/client');
 const categoriesData = require('./categories.json');
 
@@ -8,23 +7,6 @@ const client = createClient({
   token: process.env.SANITY_API_TOKEN,
   useCdn: false,
 });
-
-async function deleteAllCategories() {
-  try {
-    // Fetch all existing categories
-    const existingCategories = await client.fetch('*[_type == "category"]');
-    
-    // Delete each category
-    for (const category of existingCategories) {
-      await client.delete(category._id);
-      console.log(`Deleted category: ${category.name}`);
-    }
-    
-    console.log('All existing categories deleted');
-  } catch (error) {
-    console.error('Error deleting categories:', error);
-  }
-}
 
 async function createCategories() {
   const categories = categoriesData["Flutter Packages"].map((category, index) => {
@@ -39,32 +21,30 @@ async function createCategories() {
   console.log(categories);
 
   try {
+    // Fetch existing categories
+    const existingCategories = await client.fetch('*[_type == "category"]');
+
     for (const category of categories) {
-      const result = await client.create(category);
-      console.log(`Created category: ${result.name}`);
+      // Check if the category already exists
+      const existingCategory = existingCategories.find(c => c.name === category.name);
+      if (existingCategory) {
+        console.log(`Category already exists: ${category.name}`);
+      } else {
+        const result = await client.create(category);
+        console.log(`Created category: ${result.name}`);
+      }
     }
-    console.log('All categories created successfully');
+    console.log('All categories processed successfully');
   } catch (error) {
     console.error('Error creating categories:', error);
-  }
-}
-
-async function deleteAllSubCategories() {
-  try {
-    const existingSubCategories = await client.fetch('*[_type == "subCategory"]');
-    for (const subCategory of existingSubCategories) {
-      await client.delete(subCategory._id);
-      console.log(`Deleted subcategory: ${subCategory.name}`);
-    }
-    console.log('All existing subcategories deleted');
-  } catch (error) {
-    console.error('Error deleting subcategories:', error);
   }
 }
 
 async function createSubCategories() {
   try {
     const categories = await client.fetch('*[_type == "category"]');
+    // Fetch existing subcategories
+    const existingSubCategories = await client.fetch('*[_type == "subCategory"]');
     
     for (const categoryData of categoriesData["Flutter Packages"]) {
       const [categoryName, subCategories] = Object.entries(categoryData)[0];
@@ -79,6 +59,13 @@ async function createSubCategories() {
         const [subCategoryName, subCategoryInfo] = Object.entries(subCategoryData)[0];
         const slug = subCategoryName.toLowerCase().replace(/\s+/g, '-');
         
+        // Check if the subcategory already exists
+        const existingSubCategory = existingSubCategories.find(sc => sc.name === subCategoryName);
+        if (existingSubCategory) {
+          console.log(`Subcategory already exists: ${subCategoryName}`);
+          continue;
+        }
+
         const subCategory = {
           _type: 'subCategory',
           name: subCategoryName,
@@ -101,24 +88,13 @@ async function createSubCategories() {
         console.log(`Created subcategory: ${result.name}`);
       }
     }
-    console.log('All subcategories created successfully');
+    console.log('All subcategories processed successfully');
   } catch (error) {
     console.error('Error creating subcategories:', error);
   }
 }
 
-async function main() {
-  console.log('Starting category and subcategory creation process...');
-  
-  try {
-    // await deleteAllCategories();
-    // await createCategories();
-    // await deleteAllSubCategories();
-    await createSubCategories();
-    console.log('Category and subcategory creation process completed successfully.');
-  } catch (error) {
-    console.error('Error in main process:', error);
-  }
-}
-
-main();
+module.exports = {
+  createCategories,
+  createSubCategories
+};

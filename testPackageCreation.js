@@ -1,6 +1,6 @@
 require('dotenv').config(); // Load environment variables from .env file
 const { fetchAndAppendPackages, createAllPackages } = require('./createPackages');
-const { deleteAllPackages } = require('./deletionFunctions');
+const { fetchAllPackages } = require('./deletionFunctions');
 
 async function testPackageCreationWithFetch() {
   console.log('Starting package data fetch and creation...');
@@ -209,9 +209,8 @@ async function testPackageCreationWithFetch() {
   ];
   
   try {
-    await deleteAllPackages();
-    await fetchAndAppendPackages(packageNames);
-    await createAllPackages();
+    const packages = await fetchAllPackages();
+    console.log(packages.length);
     console.log('All packages fetched, appended, and created successfully.');
   } catch (error) {
     console.error('Error in test:', error);

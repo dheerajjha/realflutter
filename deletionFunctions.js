@@ -48,5 +48,6 @@ async function deleteAllPackages() {
 
 module.exports = {
   deletePackage,
-  deleteAllPackages
+  deleteAllPackages,
+  fetchAllPackages
 };
