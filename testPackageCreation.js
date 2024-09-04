@@ -3,6 +3,7 @@ const { fetchAndAppendPackages, createAllPackages } = require('./createPackages'
 const { fetchAllPackages } = require('./deletionFunctions');
 
 async function testPackageCreationWithFetch() {
+  
   console.log('Starting package data fetch and creation...');
   
   const packageNames = [
