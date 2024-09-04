@@ -57,7 +57,7 @@ async function createSubCategories() {
 
       for (const subCategoryData of subCategories) {
         const [subCategoryName, subCategoryInfo] = Object.entries(subCategoryData)[0];
-        const slug = subCategoryName.toLowerCase().replace(/\s+/g, '-');
+        const slug = subCategoryName.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '').replace(/-+$/, '');
         
         // Check if the subcategory already exists
         const existingSubCategory = existingSubCategories.find(sc => sc.name === subCategoryName);

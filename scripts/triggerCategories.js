@@ -64,16 +64,32 @@ async function updatePackageSubCategories() {
 	}
 }
 
+async function listPackagesWithNoSubCategories() {
+    try {
+        const packages = await client.fetch('*[_type == "package"]');
+        // first 5 packages print only _ref
+        console.log('Packages:', packages.map(pkg => pkg.subCategories));
+        const packagesWithNoSubCategories = packages.filter(pkg => !pkg.subCategories || pkg.subCategories.length === 0);
+        console.log('Packages with no subcategories:', packagesWithNoSubCategories.map(pkg => pkg.name));
+    } catch (error) {
+        console.error('Error listing packages with no subcategories:', error);
+    }
+}
+
 async function main() {
 	console.log('Starting category and subcategory update process...');
 	
 	try {
+        
+        // await deleteAllSubCategories();
+        // await deleteAllCategories();
 		// await createCategories();
 		// await createSubCategories();
 		// await updateCategories();
 		// await updateSubCategories();
-        // await deleteAllCategories();
 		// await updatePackageSubCategories();
+        // await deleteAllSubCategories();
+        await listPackagesWithNoSubCategories();
 		console.log('Category and subcategory update process completed successfully.');
 	} catch (error) {
 		console.error('Error in main process:', error);
