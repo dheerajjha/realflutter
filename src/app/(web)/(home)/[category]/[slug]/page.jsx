@@ -41,7 +41,12 @@ const page = async ({ params }) => {
   const data = await fetchPackage(slug);
   console.log(data);
   const tags = data?.tags?.join(" ");
-  const plateforms = data?.platforms.map((item) => item?.name).join(" ");
+  const plateforms = data?.platforms.map((item) => {
+    if (item === "ios") {
+      return "iOS";
+    }
+    return item?.charAt(0).toUpperCase() + item?.slice(1);
+  }).join(", ");
   const breadCrumbs = [
     {
       id: 1,
@@ -150,7 +155,7 @@ const page = async ({ params }) => {
                   <span>: {dayjs(data?._createdAt).format("DD MMM YYYY")}</span>
                 </p>
                 <p className="flex">
-                  <span className="min-w-[130px]">Plateforms</span>
+                  <span className="min-w-[130px]">Platforms</span>
                   <span>: {plateforms}</span>
                 </p>
                 <p className="flex items-center">
