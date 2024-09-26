@@ -24,7 +24,7 @@ const AuthSider = ({ active, setActive, text }) => {
   const [formData, setFormData] = useState(defaultFormData);
 
   const inputStyles =
-    "p-[8px] rounded-full pl-3 text-[#ffffff66] w-full text-[16px] bg-[#1A2B3A] border-none focus:outline-none bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)]";
+    "p-[8px] rounded-full pl-6 text-[#ffffff66] w-full text-[16px] bg-[#1A2B3A] border-none focus:outline-none bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)]";
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -70,7 +70,7 @@ const AuthSider = ({ active, setActive, text }) => {
               className={inputStyles}
               type="text"
               name="name"
-              placeholder="John Doe"
+              placeholder="Full Name"
               required
               value={formData.name}
               onChange={handleInputChange}
@@ -79,7 +79,7 @@ const AuthSider = ({ active, setActive, text }) => {
               className={inputStyles}
               type="email"
               name="email"
-              placeholder="name@company.com"
+              placeholder="Email"
               required
               value={formData.email}
               onChange={handleInputChange}
@@ -88,7 +88,7 @@ const AuthSider = ({ active, setActive, text }) => {
               className={inputStyles}
               type="password"
               name="password"
-              placeholder="password"
+              placeholder="Password"
               required
               minLength={6}
               value={formData.password}

@@ -24,7 +24,7 @@ const AuthSider = ({ active, setActive, text }) => {
   const [formData, setFormData] = useState(defaultFormData);
 
   const inputStyles =
-    "p-[8px] rounded-full pl-3 text-[#ffffff66] w-full text-[16px] bg-[#1A2B3A] border-none focus:outline-none bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)]";
+    "p-[12px] rounded-full pl-6 text-[#ffffff66] w-full text-[16px] bg-[#1A2B3A] border-none focus:outline-none bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)]";
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -80,14 +80,14 @@ const AuthSider = ({ active, setActive, text }) => {
         </Button>
       </SheetTrigger>
       <SheetContent className="w-full max-w-[500px] bg-[#122030] border-l-0">
-        <div className="flex items-center justify-center flex-col w-full gap-8 mt-20 z-10">
+        <div className="flex items-center justify-center flex-col w-full gap-8 h-full z-10">
           <Image
             src="/assets/logo-white-text.png"
             alt="logo"
-            width={130}
-            height={80}
+            width={220}
+            height={144}
           />
-          <p className="text-white font-medium text-[16px] lg:text-[25px] max-w-5xl text-center">
+          <p className="text-white font-medium text-[16px] lg:text-[20px] max-w-5xl text-center">
             Log in to your <span className="text-[#62A5DA]">Real Flutter</span>{" "}
             <br />
             Account
@@ -96,13 +96,13 @@ const AuthSider = ({ active, setActive, text }) => {
             className="flex items-center justify-center flex-col w-full gap-8"
             onSubmit={handleSubmit}
           >
-            <div className="max-w-sm mx-auto space-y-3">
+            <div className="max-w-sm px-8 mx-auto space-y-6">
               {openSignup && (
                 <input
                   className={inputStyles}
                   type="text"
                   name="name"
-                  placeholder="John Doe"
+                  placeholder="Full Name"
                   required
                   value={formData.name}
                   onChange={handleInputChange}
@@ -112,7 +112,7 @@ const AuthSider = ({ active, setActive, text }) => {
                 className={inputStyles}
                 type="email"
                 name="email"
-                placeholder="name@company.com"
+                placeholder="Email"
                 required
                 value={formData.email}
                 onChange={handleInputChange}
@@ -121,7 +121,7 @@ const AuthSider = ({ active, setActive, text }) => {
                 className={inputStyles}
                 type="password"
                 name="password"
-                placeholder="password"
+                placeholder="Password"
                 required
                 minLength={6}
                 value={formData.password}
@@ -136,7 +136,7 @@ const AuthSider = ({ active, setActive, text }) => {
             {openSignup ? (
               <Button
                 variant="gradient"
-                className="w-full max-w-sm p-[12px]"
+                className="w-full max-w-[calc(320px)] p-[20px]"
                 type="submit"
               >
                 Sign Up
@@ -144,7 +144,7 @@ const AuthSider = ({ active, setActive, text }) => {
             ) : (
               <Button
                 variant="gradient"
-                className="w-full max-w-sm p-[12px]"
+                className="w-full max-w-[calc(320px)] p-[20px]"
                 onClick={() => loginHandler("sanity-login")}
               >
                 Login
@@ -219,14 +219,14 @@ const AuthSider = ({ active, setActive, text }) => {
           alt="leaf"
           width={150}
           height={150}
-          className="absolute hidden lg:flex top-[3%] right-[3%]  z-0"
+          className="absolute hidden lg:flex top-[5%] right-[5%]  z-0"
         />
         <Image
           src="/assets/leaf.png"
           alt="leaf"
           width={150}
           height={150}
-          className="absolute hidden lg:flex bottom-[3%] left-[3%] transform rotate-90 z-0"
+          className="absolute hidden lg:flex bottom-[5%] left-[5%] transform rotate-90 z-0"
         />
       </SheetContent>
     </Sheet>

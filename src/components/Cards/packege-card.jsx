@@ -12,11 +12,10 @@ const PackegeCard = ({
   currentSlug,
 }) => {
   return (
-    <Card className="min-w-[270px] border-none space-y-3 p-5">
+    <Card className="min-w-[270px] border border-transparent hover:shadow-xl transition-shadow duration-300 p-5">
       <Link
         href={`/${currentSlug}`}
-        // className="px-3 py-1 bg-[#62A5DA] rounded-full text-[16px] font-medium text-white"
-        className="w-full"
+        className="w-full flex flex-col h-full"
       >
         {imageLink && (
           <div className="rounded-lg w-full aspect-[5/4]">
@@ -29,11 +28,11 @@ const PackegeCard = ({
             />
           </div>
         )}
-        <div className="mt-5 space-y-1">
+        <div className="mt-5 space-y-1 flex-grow">
           <h3 className="text-heading text-[16px] font-medium">{title}</h3>
           <p className="text-subheading text-sm">{description}</p>
         </div>
-        <div className="px-3 py-1 bg-[#62A5DA] rounded-full text-[16px] font-medium text-white mt-3 w-fit">
+        <div className="px-3 py-1 bg-[#62A5DA] rounded-full text-[16px] font-medium text-white mt-3 w-fit self-start">
           {packagesCount} packages
         </div>
       </Link>

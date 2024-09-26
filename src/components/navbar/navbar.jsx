@@ -31,7 +31,7 @@ const Navbar = () => {
         ) : (
           <div className="hidden md:flex items-center gap-5 ">
             <AuthSider active={active} setActive={setActive} text="Login" />
-            <AuthSider active={active} setActive={setActive} text="Signup" />
+            <AuthSider active={active} setActive={setActive} text="Sign Up" />
           </div>
         )}
 
