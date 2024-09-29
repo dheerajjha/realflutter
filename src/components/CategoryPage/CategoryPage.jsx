@@ -136,8 +136,6 @@ const CategoryPage = () => {
     }
   }, [search, selected, data]);
 
-  console.log("selected", packages);
-
   if (loading) return <Loader />;
 
   return (
@@ -279,6 +277,9 @@ const CategoryPage = () => {
               </div>
               <div className="space-y-5">
                 {packages.map((item, index) => {
+                  if (item?.packageImage === null) {
+                    item.packageImage = data.subcategoryImage;
+                  }
                   return (
                     <DetailPackageCard
                       key={index}
