@@ -25,7 +25,7 @@ export const getSubcategoryPackages = groq`*[_type == "subCategory" && slug.curr
   },
   subcategoryImage,
   packagesCount,
-  "packages": *[_type == "package" && references(^._id)]{
+  "packages": *[_type == "package" && references(^._id)] | order(likesCount desc) {
     name,
     author,
     shortDescription,
