@@ -151,47 +151,43 @@ const AuthSider = ({ active, setActive, text }) => {
               </Button>
             )}
           </form>
-          {!openSignup && (
-            <div className="text-white flex items-center justify-between gap-5">
-              <div className="p-[2px] rounded-md w-[150px] text-[#ffffff66] text-[16px] bg-[#1A2B3A] border-none focus:outline-none bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)]"></div>
-              <span className="whitespace-nowrap">or login with</span>
-              <div className="p-[2px] rounded-md w-[150px] text-[#ffffff66] text-[16px] bg-[#1A2B3A] border-none focus:outline-none bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)]"></div>
-            </div>
-          )}
+          <div className="text-white flex items-center justify-between gap-5">
+            <div className="p-[2px] rounded-md w-[150px] text-[#ffffff66] text-[16px] bg-[#1A2B3A] border-none focus:outline-none bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)]"></div>
+            <span className="whitespace-nowrap">{openSignup ? "or signup with" : "or login with"}</span>
+            <div className="p-[2px] rounded-md w-[150px] text-[#ffffff66] text-[16px] bg-[#1A2B3A] border-none focus:outline-none bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)]"></div>
+          </div>
 
-          {!openSignup && (
-            <div className="flex items-center gap-10 justify-center text-white">
-              <Button
-                onClick={() => loginHandler("google")}
-                variant="text"
-                type="submit"
-                name="action"
-                value="google"
-              >
-                <Image
-                  src="/assets/google.svg"
-                  alt="google"
-                  width={24}
-                  height={24}
-                />
-              </Button>
+          <div className="flex items-center gap-10 justify-center text-white">
+            <Button
+              onClick={() => loginHandler("google")}
+              variant="text"
+              type="submit"
+              name="action"
+              value="google"
+            >
+              <Image
+                src="/assets/google.svg"
+                alt="google"
+                width={24}
+                height={24}
+              />
+            </Button>
 
-              <Button
-                onClick={() => loginHandler("github")}
-                variant="text"
-                type="submit"
-                name="action"
-                value="github"
-              >
-                <Image
-                  src="/assets/github.svg"
-                  alt="github"
-                  width={30}
-                  height={30}
-                />
-              </Button>
-            </div>
-          )}
+            <Button
+              onClick={() => loginHandler("github")}
+              variant="text"
+              type="submit"
+              name="action"
+              value="github"
+            >
+              <Image
+                src="/assets/github.svg"
+                alt="github"
+                width={30}
+                height={30}
+              />
+            </Button>
+          </div>
 
           <div className="text-white flex items-center gap-3">
             {openSignup ? "Already have an account?" : "Don't have an account?"}
