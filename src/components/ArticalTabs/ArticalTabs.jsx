@@ -7,7 +7,7 @@ import remarkGfm from "remark-gfm";
 
 const ArticalTabs = ({ body }) => {
   const [mounted, setMounted] = useState(false);
-  const [activeTab, setActiveTab] = useState("description");
+  const [activeTab, setActiveTab] = useState("tutorial");
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -17,7 +17,7 @@ const ArticalTabs = ({ body }) => {
   return (
     <div className="w-full">
       <Tabs
-        defaultValue="description"
+        defaultValue="tutorial"
         className="w-full px-0"
         onValueChange={(value) => setActiveTab(value)}
       >
