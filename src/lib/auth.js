@@ -22,11 +22,11 @@ export const authOptions = {
   adapter: SanityAdapter(sanityClient),
   debug: process.env.NODE_ENV === "development",
   secret: process.env.NEXT_PUBLIC_AUTH_SECRET,
-  callback: {
+  callbacks: {
     session: async ({ session, token }) => {
       const userEmail = token.email;
       const userIdObj = await sanityClient.fetch(
-        `*[_type == "user" * email == $email][0]{
+        `*[_type == "user" && email == $email][0]{
         _id,
         }`,
         { email: userEmail }
