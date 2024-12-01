@@ -2,7 +2,7 @@
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { GithubIcon, LinkedinIcon } from "lucide-react";
+import { GithubIcon, LinkedinIcon, Eye, EyeOff } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 import { signUp } from "next-auth-sanity/client";
@@ -21,6 +21,7 @@ const AuthSider = ({ active, setActive, text }) => {
     text === "Signup" ? true : false
   );
   const [formData, setFormData] = useState(defaultFormData);
+  const [showPassword, setShowPassword] = useState(false);
 
   const inputStyles =
     "p-[8px] rounded-full pl-6 text-[#ffffff66] w-full text-[16px] bg-[#1A2B3A] border-none focus:outline-none bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)]";
@@ -76,16 +77,29 @@ const AuthSider = ({ active, setActive, text }) => {
               value={formData.email}
               onChange={handleInputChange}
             />
-            <input
-              className={inputStyles}
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-              minLength={6}
-              value={formData.password}
-              onChange={handleInputChange}
-            />
+            <div className="relative">
+              <input
+                className={inputStyles}
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                required
+                minLength={6}
+                value={formData.password}
+                onChange={handleInputChange}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[#ffffff66]"
+              >
+                {showPassword ? (
+                  <EyeOff size={20} />
+                ) : (
+                  <Eye size={20} />
+                )}
+              </button>
+            </div>
 
             {!openSignup && (
               <p className="text-blueHeading text-right">Forgot password?</p>
