@@ -11,10 +11,17 @@ const Footer = () => {
           <Image src="/assets/logo.png" alt="logo" width={160} height={60} />
         </Link>
         <div className="flex items-center gap-10 font-semibold text-[16px]">
-          <Link href="/auth/login">Home</Link>
-          <Link href="/auth/signup">About</Link>
-          <Link href="/auth/signup">Contact</Link>
-          <Link href="/auth/signup">Legal</Link>
+          <Link href="/">Home</Link>
+          <Link href="/about">About</Link>
+          <Link href="/contact">Contact</Link>
+          <div className="flex items-center gap-10">
+            <Link href="/privacy-policy" className="hover:text-[#16509B] transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms-of-service" className="hover:text-[#16509B] transition-colors">
+              Terms of Service
+            </Link>
+          </div>
         </div>
         <div className="flex items-center gap-7">
           <Image src="/assets/linkedin.png" alt="logo" width={28} height={28} />
@@ -22,7 +29,7 @@ const Footer = () => {
           <Image src="/assets/facebook.png" alt="logo" width={30} height={30} />
         </div>
         <div className="text-muted-foreground">
-          Copyright © 2024{" "}
+          Copyright © {new Date().getFullYear()}{" "}
           <span className="text-[#16509B] font-medium">Real Flutter.</span> All
           rights reserved.
         </div>
