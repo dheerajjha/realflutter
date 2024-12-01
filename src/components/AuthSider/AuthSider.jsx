@@ -18,10 +18,12 @@ const defaultFormData = {
 };
 
 const AuthSider = ({ active, setActive, text }) => {
-  const [openSignup, setOpenSignup] = useState(
-    text === "Signup" ? true : false
-  );
+  const [openSignup, setOpenSignup] = useState(false);
   const [formData, setFormData] = useState(defaultFormData);
+
+  useEffect(() => {
+    setOpenSignup(text === "Sign Up");
+  }, [text]);
 
   const inputStyles =
     "p-[12px] rounded-full pl-6 text-[#ffffff66] w-full text-[16px] bg-[#1A2B3A] border-none focus:outline-none bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)]";
