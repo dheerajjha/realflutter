@@ -66,7 +66,7 @@ const AuthSider = ({ active, setActive, text }) => {
           Account
         </p>
         <form className="flex items-center justify-center flex-col w-full gap-8">
-          <div className="max-w-sm mx-auto space-y-3">
+          <div className="max-w-sm mx-auto space-y-3 w-full px-8">
             <input
               className={inputStyles}
               type="email"
@@ -91,19 +91,20 @@ const AuthSider = ({ active, setActive, text }) => {
               <p className="text-blueHeading text-right">Forgot password?</p>
             )}
           </div>
-        </form>
-        <Button
-          variant="gradient"
-          className="w-[calc(100%-4px)] max-w-[calc(384px-4px)] p-[12px]"
-          onClick={() => loginHandler("sanity-login")}
-        >
-          Login
-        </Button>
 
-        <div className="text-white flex items-center justify-between gap-5">
-          <div className="p-[2px] rounded-md w-[120px] text-[#ffffff66] text-[16px] bg-[#1A2B3A] border-none focus:outline-none bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)]"></div>
+          <Button
+            variant="gradient"
+            className="w-full max-w-[calc(320px)] p-[20px]"
+            onClick={() => loginHandler("sanity-login")}
+          >
+            Login
+          </Button>
+        </form>
+
+        <div className="text-white flex items-center justify-between gap-5 w-full max-w-sm px-8">
+          <div className="p-[2px] rounded-md w-[150px] text-[#ffffff66] text-[16px] bg-[#1A2B3A] border-none focus:outline-none bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)]"></div>
           <span className="whitespace-nowrap">or login with</span>
-          <div className="p-[2px] rounded-md w-[120px] text-[#ffffff66] text-[16px] bg-[#1A2B3A] border-none focus:outline-none bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)]"></div>
+          <div className="p-[2px] rounded-md w-[150px] text-[#ffffff66] text-[16px] bg-[#1A2B3A] border-none focus:outline-none bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)]"></div>
         </div>
 
         <div className="flex items-center gap-10 justify-center text-white">
