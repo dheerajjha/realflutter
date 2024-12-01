@@ -21,13 +21,16 @@ const Navbar = () => {
           <Image src="/assets/logo.png" alt="logo" width={160} height={60} />
         </Link>
         {data ? (
-          <Button
-            variant="gradient"
-            onClick={signOut}
-            className="hidden md:block"
-          >
-            Logout
-          </Button>
+          <div className="hidden md:flex items-center gap-4">
+            <span className="text-heading">Hi, {data.user?.name} 👋</span>
+            <Button
+              variant="gradient"
+              onClick={signOut}
+              className="hidden md:block w-[120px]"
+            >
+              Logout
+            </Button>
+          </div>
         ) : (
           <div className="hidden md:flex items-center gap-5 ">
             <AuthSider active={active} setActive={setActive} text="Login" />
@@ -64,13 +67,18 @@ const MobileNavbar = ({ data }) => {
       <SheetContent>
         <div className="mt-20">
           {data ? (
-            <Button
-              variant="gradient"
-              onClick={signOut}
-              className="lg:hidden w-fit"
-            >
-              Logout
-            </Button>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <span className="text-heading text-lg">Hi, {data.user?.name} 👋</span>
+              </div>
+              <Button
+                variant="gradient"
+                onClick={signOut}
+                className="w-[120px]"
+              >
+                Logout
+              </Button>
+            </div>
           ) : (
             <div className="lg:hidden items-center gap-5 ">
               <div className="space-y-3 flex flex-col">
