@@ -55,7 +55,13 @@ const AuthSider = ({ active, setActive, text }) => {
   return (
     <div className="w-full min-h-screen flex items-center justify-center flex-col bg-[#122030]">
       <div className="flex items-center justify-center flex-col w-full gap-8">
-        <Image src="/assets/logo.svg" alt="logo" width={100} height={60} />
+        <Image 
+          src="/assets/logo-white-text.png" 
+          alt="logo" 
+          width={220} 
+          height={144}
+          className="w-[220px] md:w-[100px]"
+        />
         <p className="text-white font-medium text-[16px] lg:text-[25px] max-w-5xl text-center">
           Log in to your <span className="text-[#62A5DA]">Real Flutter</span>{" "}
           <br />
@@ -106,6 +112,44 @@ const AuthSider = ({ active, setActive, text }) => {
             </Button>
           )}
         </form>
+
+        <div className="text-white flex items-center justify-between gap-5">
+          <div className="p-[2px] rounded-md w-[120px] text-[#ffffff66] text-[16px] bg-[#1A2B3A] border-none focus:outline-none bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)]"></div>
+          <span className="whitespace-nowrap">or signup with</span>
+          <div className="p-[2px] rounded-md w-[120px] text-[#ffffff66] text-[16px] bg-[#1A2B3A] border-none focus:outline-none bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)]"></div>
+        </div>
+
+        <div className="flex items-center gap-10 justify-center text-white">
+          <Button
+            onClick={() => signIn("google")}
+            variant="text"
+            type="submit"
+            name="action"
+            value="google"
+          >
+            <Image
+              src="/assets/google.svg"
+              alt="google"
+              width={24}
+              height={24}
+            />
+          </Button>
+
+          <Button
+            onClick={() => signIn("github")}
+            variant="text"
+            type="submit"
+            name="action"
+            value="github"
+          >
+            <Image
+              src="/assets/github.svg"
+              alt="github"
+              width={30}
+              height={30}
+            />
+          </Button>
+        </div>
 
         <div className="text-white flex items-center gap-2">
           Already have an account?

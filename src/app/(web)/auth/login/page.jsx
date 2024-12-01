@@ -53,7 +53,13 @@ const AuthSider = ({ active, setActive, text }) => {
   return (
     <div className="w-full min-h-screen flex items-center justify-center flex-col bg-[#122030]">
       <div className="flex items-center justify-center flex-col w-full gap-8">
-        <Image src="/assets/logo.svg" alt="logo" width={100} height={60} />
+        <Image 
+          src="/assets/logo-white-text.png" 
+          alt="logo" 
+          width={220} 
+          height={144}
+          className="w-[220px] md:w-[100px]"
+        />
         <p className="text-white font-medium text-[16px] lg:text-[25px] max-w-5xl text-center">
           Log in to your <span className="text-[#62A5DA]">Real Flutter</span>{" "}
           <br />
