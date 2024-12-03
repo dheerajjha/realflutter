@@ -3,25 +3,12 @@
 import { logEvent, getAnalytics } from "firebase/analytics";
 import { app } from "./firebase";
 
-// Helper function to get analytics instance
-const getAnalyticsInstance = () => {
-  if (typeof window === 'undefined') return null;
-  try {
-    return getAnalytics(app);
-  } catch (error) {
-    console.error('Failed to get analytics instance:', error);
-    return null;
-  }
-};
-
 // Helper function to safely log events
 const safeLogEvent = (eventName, eventParams = {}) => {
   if (typeof window === 'undefined') return;
   
-  const analytics = getAnalyticsInstance();
-  if (!analytics) return;
-
   try {
+    const analytics = getAnalytics();
     console.log(`Logging event: ${eventName}`, eventParams); // Debug log
     logEvent(analytics, eventName, eventParams);
   } catch (error) {

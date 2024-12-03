@@ -1,7 +1,7 @@
 'use client';
 
 import { initializeApp } from "firebase/app";
-import { getAnalytics, logEvent } from "firebase/analytics";
+import { getAnalytics } from "firebase/analytics";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -17,16 +17,11 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Analytics
+// Initialize Analytics and get a reference to the service
 let analytics = null;
 
-// Only initialize analytics on the client side
 if (typeof window !== 'undefined') {
   analytics = getAnalytics(app);
-  // Log a test event to verify setup
-  logEvent(analytics, 'app_initialized', {
-    timestamp: new Date().toISOString()
-  });
 }
 
 export { app, analytics }; 
