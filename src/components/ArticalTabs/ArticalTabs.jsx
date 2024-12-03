@@ -24,6 +24,7 @@ const ArticalTabs = ({ body }) => {
 
   useEffect(() => {
     if (mounted) {
+      console.log('ArticalTabs: Component mounted, tracking initial content view');
       trackContentView('article', 'initial_view', 'tutorial');
     }
   }, [mounted]);
@@ -42,17 +43,20 @@ const ArticalTabs = ({ body }) => {
 
   if (!mounted) return null;
 
+  const handleTabChange = (value) => {
+    console.log('ArticalTabs: Tab changed to:', value);
+    setActiveTab(value);
+    trackTabChange(value);
+    trackContentView('article', value, value);
+  };
+
   return (
     <div className="w-full">
       <Tooltip.Provider>
         <Tabs
           defaultValue="tutorial"
           className="w-full px-0"
-          onValueChange={(value) => {
-            setActiveTab(value);
-            trackTabChange(value);
-            trackContentView('article', value, value);
-          }}
+          onValueChange={handleTabChange}
         >
           <TabsList className="w-full px-0">
             <TabsTrigger value="description" className="w-full">

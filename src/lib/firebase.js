@@ -1,9 +1,9 @@
-// Import the functions you need from the SDKs you need
+'use client';
+
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getAnalytics, logEvent } from "firebase/analytics";
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyBlFmjPulSWwsWYZflQqdmnd85_W9-0jTw",
   authDomain: "realflutter-70d75.firebaseapp.com",
@@ -16,6 +16,17 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+
+// Initialize Analytics
+let analytics = null;
+
+// Only initialize analytics on the client side
+if (typeof window !== 'undefined') {
+  analytics = getAnalytics(app);
+  // Log a test event to verify setup
+  logEvent(analytics, 'app_initialized', {
+    timestamp: new Date().toISOString()
+  });
+}
 
 export { app, analytics }; 

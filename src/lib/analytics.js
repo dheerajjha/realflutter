@@ -1,66 +1,102 @@
-import { logEvent } from "firebase/analytics";
-import { analytics } from "./firebase";
+'use client';
+
+import { logEvent, getAnalytics } from "firebase/analytics";
+import { app } from "./firebase";
+
+// Helper function to get analytics instance
+const getAnalyticsInstance = () => {
+  if (typeof window === 'undefined') return null;
+  try {
+    return getAnalytics(app);
+  } catch (error) {
+    console.error('Failed to get analytics instance:', error);
+    return null;
+  }
+};
+
+// Helper function to safely log events
+const safeLogEvent = (eventName, eventParams = {}) => {
+  if (typeof window === 'undefined') return;
+  
+  const analytics = getAnalyticsInstance();
+  if (!analytics) return;
+
+  try {
+    console.log(`Logging event: ${eventName}`, eventParams); // Debug log
+    logEvent(analytics, eventName, eventParams);
+  } catch (error) {
+    console.error(`Failed to log event ${eventName}:`, error);
+  }
+};
 
 // Navigation Events
 export const trackPageView = (pageName, additionalParams = {}) => {
-  logEvent(analytics, 'page_view', {
+  safeLogEvent('page_view', {
     page_name: pageName,
+    timestamp: new Date().toISOString(),
     ...additionalParams
   });
 };
 
 // Search Events
 export const trackSearch = (searchTerm, category = 'global') => {
-  logEvent(analytics, 'search', {
+  safeLogEvent('search', {
     search_term: searchTerm,
-    category: category
+    category: category,
+    timestamp: new Date().toISOString()
   });
 };
 
 // Content Interaction Events
 export const trackContentView = (contentType, contentId, contentName) => {
-  logEvent(analytics, 'content_view', {
+  safeLogEvent('content_view', {
     content_type: contentType,
     content_id: contentId,
-    content_name: contentName
+    content_name: contentName,
+    timestamp: new Date().toISOString()
   });
 };
 
 // Tab Interaction Events
 export const trackTabChange = (tabName, contentType = 'article_tab') => {
-  logEvent(analytics, 'tab_change', {
+  safeLogEvent('tab_change', {
     tab_name: tabName,
-    content_type: contentType
+    content_type: contentType,
+    timestamp: new Date().toISOString()
   });
 };
 
 // Filter Events
 export const trackFilterUse = (filterType, filterValue) => {
-  logEvent(analytics, 'filter_use', {
+  safeLogEvent('filter_use', {
     filter_type: filterType,
-    filter_value: filterValue
+    filter_value: filterValue,
+    timestamp: new Date().toISOString()
   });
 };
 
 // Authentication Events
 export const trackAuthEvent = (eventType, method = 'email') => {
-  logEvent(analytics, eventType, {
-    auth_method: method
+  safeLogEvent(eventType, {
+    auth_method: method,
+    timestamp: new Date().toISOString()
   });
 };
 
 // Platform Selection Events
 export const trackPlatformSelection = (platform) => {
-  logEvent(analytics, 'platform_select', {
-    platform_name: platform
+  safeLogEvent('platform_select', {
+    platform_name: platform,
+    timestamp: new Date().toISOString()
   });
 };
 
 // Package Interaction Events
 export const trackPackageInteraction = (packageId, packageName, actionType) => {
-  logEvent(analytics, 'package_interaction', {
+  safeLogEvent('package_interaction', {
     package_id: packageId,
     package_name: packageName,
-    action_type: actionType
+    action_type: actionType,
+    timestamp: new Date().toISOString()
   });
 }; 
