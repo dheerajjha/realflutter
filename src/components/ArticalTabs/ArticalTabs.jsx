@@ -5,8 +5,7 @@ import { useEffect, useState } from "react";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 import CustomTooltip from "../CustomTooltip/CustomTooltip";
 import * as Tooltip from '@radix-ui/react-tooltip';
-import { logEvent } from "firebase/analytics";
-import { analytics } from "@/lib/firebase";
+import { trackTabChange, trackContentView } from "@/lib/analytics";
 
 const ArticalTabs = ({ body }) => {
   const [mounted, setMounted] = useState(false);
@@ -22,6 +21,12 @@ const ArticalTabs = ({ body }) => {
     }, 3000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (mounted) {
+      trackContentView('article', 'initial_view', 'tutorial');
+    }
+  }, [mounted]);
 
   useEffect(() => {
     setShowTutorialTooltip(false);
@@ -45,10 +50,8 @@ const ArticalTabs = ({ body }) => {
           className="w-full px-0"
           onValueChange={(value) => {
             setActiveTab(value);
-            logEvent(analytics, 'tab_change', {
-              tab_name: value,
-              content_type: 'article_tab'
-            });
+            trackTabChange(value);
+            trackContentView('article', value, value);
           }}
         >
           <TabsList className="w-full px-0">

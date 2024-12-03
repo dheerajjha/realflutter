@@ -12,14 +12,26 @@ import AuthSider from "../AuthSider/AuthSider";
 import { fetchCategoryWithSubCategories } from "@/lib/apis";
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { SessionProvider } from "next-auth/react";
+import { trackAuthEvent, trackPageView } from "@/lib/analytics";
 
 const Navbar = () => {
   const { data } = useSession();
   const [active, setActive] = useState("signup");
+
+  const handleSignOut = async () => {
+    trackAuthEvent('logout');
+    await signOut();
+  };
+
+  const handleAuthSider = (type) => {
+    setActive(type);
+    trackAuthEvent(type === 'signup' ? 'sign_up' : 'login');
+  };
+
   return (
     <header className="bg-background h-[80px] lg:h-[70px] w-full flex items-center justify-center">
       <nav className="max-w-6xl w-full h-full flex items-end lg:items-center justify-between px-3 md:px-5 pb-3 lg:pb-0 lg:px-0">
-        <Link href="/">
+        <Link href="/" onClick={() => trackPageView('home_page')}>
           <Image src="/assets/logo.png" alt="logo" width={160} height={60} />
         </Link>
         {data ? (
@@ -38,6 +50,7 @@ const Navbar = () => {
                     <Link 
                       href="/templates" 
                       className="flex items-center gap-2 w-full p-2 text-heading hover:text-[#62A5DA] transition-colors rounded-md"
+                      onClick={() => trackPageView('templates_page')}
                     >
                       <Image src="/assets/template.svg" alt="templates" width={20} height={20} />
                       <span>Templates</span>
@@ -46,7 +59,7 @@ const Navbar = () => {
                   <Separator className="my-2" />
                   <DropdownMenu.Item className="outline-none">
                     <button
-                      onClick={() => signOut()}
+                      onClick={handleSignOut}
                       className="flex items-center gap-2 w-full p-2 text-red-500 hover:text-red-600 transition-colors rounded-md"
                     >
                       <Image src="/assets/logout.svg" alt="logout" width={20} height={20} />
@@ -59,8 +72,8 @@ const Navbar = () => {
           </div>
         ) : (
           <div className="hidden md:flex items-center gap-5">
-            <AuthSider active={active} setActive={setActive} text="Login" />
-            <AuthSider active={active} setActive={setActive} text="Sign Up" />
+            <AuthSider active={active} setActive={handleAuthSider} text="Login" />
+            <AuthSider active={active} setActive={handleAuthSider} text="Sign Up" />
           </div>
         )}
 

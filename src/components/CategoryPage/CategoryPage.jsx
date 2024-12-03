@@ -15,6 +15,7 @@ import { fetchSubcategoryPackages } from "@/lib/apis";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loader from "@/components/Loader/Loader";
+import { trackSearch, trackFilterUse, trackPageView } from "@/lib/analytics";
 
 const checkBoxItem = [
   {
@@ -97,13 +98,23 @@ const CategoryPage = () => {
 
   useEffect(() => {
     getData();
+    trackPageView('category_page', { category });
   }, []);
 
   const handleCheckChange = (e, name, slug) => {
     if (e) {
       setSelected([...selected, { label: name, value: slug }]);
+      trackFilterUse('platform', slug);
     } else {
       setSelected(selected.filter((item) => item.value !== slug));
+      trackFilterUse('platform_remove', slug);
+    }
+  };
+
+  const handleSearch = (value) => {
+    setSearch(value);
+    if (value) {
+      trackSearch(value, 'category_search');
     }
   };
 
@@ -147,7 +158,7 @@ const CategoryPage = () => {
               type="text"
               className="w-full rounded-full border-none bg-[#1A2B3A] bg-[linear-gradient(270deg,_rgba(255,_255,_255,_0.1)_0%,_rgba(255,_255,_255,_0.25)_50.3%,_rgba(255,_255,_255,_0.1)_100%)] p-[12px] pl-12 text-[16px] text-[#ffffff66] focus:outline-none"
               placeholder="Search packages here "
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => handleSearch(e.target.value)}
               value={search}
             />
             <Search

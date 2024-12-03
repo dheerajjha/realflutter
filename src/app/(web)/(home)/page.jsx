@@ -4,6 +4,7 @@ import GradientText from "@/components/gradient-text";
 import Hero from "@/components/Hero/Hero";
 import { fetchCategoryWithSubCategories } from "@/lib/apis";
 import React, { useEffect, useState } from "react";
+import { trackSearch, trackPageView, trackContentView } from "@/lib/analytics";
 
 function filterByTagAndDescription(dataSource, search) {
   return dataSource.subCategories.filter((subCategory) => {
@@ -28,8 +29,16 @@ const HomePage = () => {
       data.sort((a, b) => a.order - b.order);
       setData(data);
       setDataSource(data);
+      trackPageView('home_page');
     })();
   }, []);
+
+  const handleSearch = (value) => {
+    setSearch(value);
+    if (value) {
+      trackSearch(value, 'home_search');
+    }
+  };
 
   useEffect(() => {
     if (search === "") {
@@ -47,7 +56,7 @@ const HomePage = () => {
 
   return (
     <div className="bg-[#ECF4FB] w-full pb-8">
-      <Hero search={search} setSearch={setSearch} />
+      <Hero search={search} setSearch={handleSearch} />
       <div className="w-full flex flex-col items-center justify-center mt-5">
         <div className="p-3 md:p-5 lg:p-0 w-full text-center">
           <GradientText
