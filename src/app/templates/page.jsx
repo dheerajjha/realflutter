@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import GradientText from "@/components/gradient-text";
@@ -7,10 +7,30 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import Navbar from "@/components/navbar/navbar";
 import Footer from "@/components/Footer/Footer";
+import analytics from "@/lib/analytics/service";
 
 const TemplatesPage = ({ templates }) => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    analytics.pageView('templates_page');
+  }, []);
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    analytics.logEvent('template_category_change', {
+      category,
+      previous_category: selectedCategory
+    });
+  };
+
+  const handleSearch = (value) => {
+    setSearchQuery(value);
+    if (value) {
+      analytics.search(value, 'templates_search');
+    }
+  };
 
   return (
     <main className="font-normal">
@@ -36,13 +56,15 @@ const TemplatesPage = ({ templates }) => {
                   type="text"
                   placeholder="Search templates..."
                   className="pl-10 py-6 bg-white"
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => handleSearch(e.target.value)}
+                  value={searchQuery}
                 />
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
               </div>
               <select
                 className="p-2 rounded-lg border border-input bg-white min-w-[200px]"
-                onChange={(e) => setSelectedCategory(e.target.value)}
+                onChange={(e) => handleCategoryChange(e.target.value)}
+                value={selectedCategory}
               >
                 <option value="all">All Categories</option>
                 <option value="ecommerce">E-commerce</option>

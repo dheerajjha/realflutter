@@ -12,26 +12,38 @@ import AuthSider from "../AuthSider/AuthSider";
 import { fetchCategoryWithSubCategories } from "@/lib/apis";
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { SessionProvider } from "next-auth/react";
-import { trackAuthEvent, trackPageView } from "@/lib/analytics";
+import analytics from "@/lib/analytics/service";
 
 const Navbar = () => {
   const { data } = useSession();
   const [active, setActive] = useState("signup");
 
+  useEffect(() => {
+    if (data?.user) {
+      analytics.setUser(data.user.id || data.user.email);
+      analytics.setUserProperties({
+        email: data.user.email,
+        name: data.user.name,
+        isLoggedIn: true
+      });
+    }
+  }, [data]);
+
   const handleSignOut = async () => {
-    trackAuthEvent('logout');
+    analytics.auth('logout');
+    analytics.setUserProperties({ isLoggedIn: false });
     await signOut();
   };
 
   const handleAuthSider = (type) => {
     setActive(type);
-    trackAuthEvent(type === 'signup' ? 'sign_up' : 'login');
+    analytics.auth(type === 'signup' ? 'sign_up' : 'login');
   };
 
   return (
     <header className="bg-background h-[80px] lg:h-[70px] w-full flex items-center justify-center">
       <nav className="max-w-6xl w-full h-full flex items-end lg:items-center justify-between px-3 md:px-5 pb-3 lg:pb-0 lg:px-0">
-        <Link href="/" onClick={() => trackPageView('home_page')}>
+        <Link href="/" onClick={() => analytics.pageView('home_page')}>
           <Image src="/assets/logo.png" alt="logo" width={160} height={60} />
         </Link>
         {data ? (
@@ -50,7 +62,7 @@ const Navbar = () => {
                     <Link 
                       href="/templates" 
                       className="flex items-center gap-2 w-full p-2 text-heading hover:text-[#62A5DA] transition-colors rounded-md"
-                      onClick={() => trackPageView('templates_page')}
+                      onClick={() => analytics.pageView('templates_page')}
                     >
                       <Image src="/assets/template.svg" alt="templates" width={20} height={20} />
                       <span>Templates</span>
