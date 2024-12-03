@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 import CustomTooltip from "../CustomTooltip/CustomTooltip";
 import * as Tooltip from '@radix-ui/react-tooltip';
-import { trackTabChange, trackContentView } from "@/lib/analytics";
+import analytics from "@/lib/analytics/service";
 
 const ArticalTabs = ({ body }) => {
   const [mounted, setMounted] = useState(false);
@@ -24,8 +24,7 @@ const ArticalTabs = ({ body }) => {
 
   useEffect(() => {
     if (mounted) {
-      console.log('ArticalTabs: Component mounted, tracking initial content view');
-      trackContentView('article', 'initial_view', 'tutorial');
+      analytics.contentView('article', 'initial_view', 'tutorial');
     }
   }, [mounted]);
 
@@ -44,10 +43,9 @@ const ArticalTabs = ({ body }) => {
   if (!mounted) return null;
 
   const handleTabChange = (value) => {
-    console.log('ArticalTabs: Tab changed to:', value);
     setActiveTab(value);
-    trackTabChange(value);
-    trackContentView('article', value, value);
+    analytics.tabChange(value);
+    analytics.contentView('article', value, value);
   };
 
   return (

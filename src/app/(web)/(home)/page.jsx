@@ -4,7 +4,7 @@ import GradientText from "@/components/gradient-text";
 import Hero from "@/components/Hero/Hero";
 import { fetchCategoryWithSubCategories } from "@/lib/apis";
 import React, { useEffect, useState } from "react";
-import { trackSearch, trackPageView, trackContentView } from "@/lib/analytics";
+import analytics from "@/lib/analytics/service";
 
 function filterByTagAndDescription(dataSource, search) {
   return dataSource.subCategories.filter((subCategory) => {
@@ -29,14 +29,14 @@ const HomePage = () => {
       data.sort((a, b) => a.order - b.order);
       setData(data);
       setDataSource(data);
-      trackPageView('home_page');
+      analytics.pageView('home_page');
     })();
   }, []);
 
   const handleSearch = (value) => {
     setSearch(value);
     if (value) {
-      trackSearch(value, 'home_search');
+      analytics.search(value, 'home_search');
     }
   };
 

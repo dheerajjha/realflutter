@@ -15,7 +15,7 @@ import { fetchSubcategoryPackages } from "@/lib/apis";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loader from "@/components/Loader/Loader";
-import { trackSearch, trackFilterUse, trackPageView } from "@/lib/analytics";
+import analytics from "@/lib/analytics/service";
 
 const checkBoxItem = [
   {
@@ -98,23 +98,23 @@ const CategoryPage = () => {
 
   useEffect(() => {
     getData();
-    trackPageView('category_page', { category });
+    analytics.pageView('category_page', { category });
   }, []);
 
   const handleCheckChange = (e, name, slug) => {
     if (e) {
       setSelected([...selected, { label: name, value: slug }]);
-      trackFilterUse('platform', slug);
+      analytics.filterUse('platform', slug);
     } else {
       setSelected(selected.filter((item) => item.value !== slug));
-      trackFilterUse('platform_remove', slug);
+      analytics.filterUse('platform_remove', slug);
     }
   };
 
   const handleSearch = (value) => {
     setSearch(value);
     if (value) {
-      trackSearch(value, 'category_search');
+      analytics.search(value, 'category_search');
     }
   };
 
