@@ -1,6 +1,7 @@
 import { Roboto } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import AnalyticsProvider from "@/components/AnalyticsProvider";
 
 import "./globals.css";
 
@@ -25,7 +26,9 @@ export default function RootLayout({ children }) {
       <body className={roboto.className}>
         <Analytics />
         <SpeedInsights />
-        {children}
+        <AnalyticsProvider>
+          {children}
+        </AnalyticsProvider>
       </body>
     </html>
   );
