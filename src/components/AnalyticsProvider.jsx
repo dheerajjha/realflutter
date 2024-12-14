@@ -1,12 +1,25 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import analytics from '@/lib/analytics/service';
 
-export default function AnalyticsProvider({ children }) {
+// Separate component for analytics tracking
+function AnalyticsTracker({ isInitialized }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  useEffect(() => {
+    // Track page view on route change
+    if (pathname && isInitialized) {
+      analytics.pageView(pathname);
+    }
+  }, [pathname, searchParams, isInitialized]);
+
+  return null;
+}
+
+export default function AnalyticsProvider({ children }) {
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
@@ -21,13 +34,12 @@ export default function AnalyticsProvider({ children }) {
     initAnalytics();
   }, [isInitialized]);
 
-  useEffect(() => {
-    // Track page view on route change
-    if (pathname && isInitialized) {
-      analytics.pageView(pathname);
-    }
-  }, [pathname, searchParams, isInitialized]);
-
-  // Render children without any wrapper to avoid hydration issues
-  return children;
+  return (
+    <>
+      <Suspense fallback={null}>
+        <AnalyticsTracker isInitialized={isInitialized} />
+      </Suspense>
+      {children}
+    </>
+  );
 } 
