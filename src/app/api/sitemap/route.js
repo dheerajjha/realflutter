@@ -1,9 +1,22 @@
 import { fetchCategoryWithSubCategories } from "@/lib/apis";
+import { client } from "@/lib/sanity";
+import { groq } from "next-sanity";
+
+async function getAllPackages() {
+  const query = groq`*[_type == "package"]{
+    "slug": slug.current,
+    "categorySlug": subCategories[0]->.slug.current
+  }`;
+  return client.fetch(query);
+}
 
 export async function GET() {
   try {
     // Fetch all categories and subcategories
-    const categories = await fetchCategoryWithSubCategories();
+    const [categories, packages] = await Promise.all([
+      fetchCategoryWithSubCategories(),
+      getAllPackages()
+    ]);
     
     // Base URL of your website
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://realflutter.com';
@@ -23,7 +36,7 @@ export async function GET() {
         </url>`;
     });
     
-    // Add dynamic category and subcategory routes
+    // Add category pages
     categories.forEach(category => {
       category.subCategories.forEach(subCategory => {
         xml += `
@@ -33,6 +46,18 @@ export async function GET() {
             <priority>0.7</priority>
           </url>`;
       });
+    });
+
+    // Add individual package pages
+    packages.forEach(pkg => {
+      if (pkg.categorySlug && pkg.slug) {
+        xml += `
+          <url>
+            <loc>${baseUrl}/${pkg.categorySlug}/${pkg.slug}</loc>
+            <changefreq>weekly</changefreq>
+            <priority>0.6</priority>
+          </url>`;
+      }
     });
     
     // Close XML string
