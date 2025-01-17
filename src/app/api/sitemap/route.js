@@ -31,8 +31,8 @@ export async function GET() {
       xml += `
         <url>
           <loc>${baseUrl}${route}</loc>
-          <changefreq>daily</changefreq>
-          <priority>${route === '' ? '1.0' : '0.8'}</priority>
+          <changefreq>monthly</changefreq>
+          <priority>${route === '' ? '1.0' : '0.7'}</priority>
         </url>`;
     });
     
@@ -42,8 +42,8 @@ export async function GET() {
         xml += `
           <url>
             <loc>${baseUrl}/${subCategory.currentSlug}</loc>
-            <changefreq>daily</changefreq>
-            <priority>0.7</priority>
+            <changefreq>monthly</changefreq>
+            <priority>0.9</priority>
           </url>`;
       });
     });
@@ -54,8 +54,8 @@ export async function GET() {
         xml += `
           <url>
             <loc>${baseUrl}/${pkg.categorySlug}/${pkg.slug}</loc>
-            <changefreq>weekly</changefreq>
-            <priority>0.6</priority>
+            <changefreq>monthly</changefreq>
+            <priority>0.8</priority>
           </url>`;
       }
     });
