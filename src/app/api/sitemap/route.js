@@ -1,5 +1,5 @@
 import { fetchCategoryWithSubCategories } from "@/lib/apis";
-import { client } from "@/lib/sanity";
+import sanityClient from "@/lib/sanity";
 import { groq } from "next-sanity";
 
 async function getAllPackages() {
@@ -7,7 +7,7 @@ async function getAllPackages() {
     "slug": slug.current,
     "categorySlug": subCategories[0]->.slug.current
   }`;
-  return client.fetch(query);
+  return sanityClient.fetch(query);
 }
 
 export async function GET() {
