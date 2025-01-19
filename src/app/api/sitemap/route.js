@@ -31,7 +31,7 @@ export async function GET() {
       xml += `
         <url>
           <loc>${baseUrl}${route}</loc>
-          <changefreq>monthly</changefreq>
+          <changefreq>daily</changefreq>
           <priority>${route === '' ? '1.0' : '0.7'}</priority>
         </url>`;
     });
@@ -42,7 +42,7 @@ export async function GET() {
         xml += `
           <url>
             <loc>${baseUrl}/${subCategory.currentSlug}</loc>
-            <changefreq>monthly</changefreq>
+            <changefreq>daily</changefreq>
             <priority>0.9</priority>
           </url>`;
       });
@@ -54,7 +54,7 @@ export async function GET() {
         xml += `
           <url>
             <loc>${baseUrl}/${pkg.categorySlug}/${pkg.slug}</loc>
-            <changefreq>monthly</changefreq>
+            <changefreq>daily</changefreq>
             <priority>0.8</priority>
           </url>`;
       }
